@@ -9,7 +9,7 @@ $(".keywords").keyup(function (event) {
     //         dataType:"jsonp",
     //         success:getInfo
     //     })
-    //按下键盘
+    //按键盘
     var keyWords = $(".keywords").val();
     var str = keyWords.replace(/(^\s*)|(\s*$)/g, '');
     var isNull = (str === '' || str === undefined || str === null);
@@ -20,6 +20,7 @@ $(".keywords").keyup(function (event) {
         $('.message').css('display', 'none')
     }
     if (event.keyCode !== 38 && event.keyCode !== 40 && !isNull) {
+        indexNow = -1;
         script.src = "https://sug.so.360.cn/suggest?callback=getInfo&encodein=utf-8&encodeout=utf-8&format=json&fields=word&word=" + keyWords;
         document.body.appendChild(script);
     }
@@ -40,8 +41,8 @@ $(".keywords").keyup(function (event) {
         }
         changeKeywords($('.keywords'));
     }
-    //按键盘下键
-    if (event.keyCode == 38 && isNull) {
+    //按键盘上键
+    if (event.keyCode == 38 && !isNull) {
         indexNow--;
         for (var i = result_length - 1; i > -1; i--) {
             if (i == indexNow) {

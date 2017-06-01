@@ -22,7 +22,9 @@ $(".keywords").keyup(function (event) {
     } else {
         $('.message').css('display', 'none');
     }
-    if (event.keyCode !== 38 && event.keyCode !== 40 && !isNull) {
+    // 当按键为home,end,page up和page down时，不执行跨域请求
+    var hah = (event.keyCode == 33 || event.keyCode == 34 || event.keyCode == 35 || event.keyCode == 36);
+    if (event.keyCode !== 38 && event.keyCode !== 40 && !isNull && !hah) {
         initWords = $(".keywords").val();//搜索框停止打字时的值
         indexNow = -1;
         script.src = "https://sug.so.360.cn/suggest?callback=getInfo&encodein=utf-8&encodeout=utf-8&format=json&fields=word&word=" + keyWords;
@@ -31,7 +33,7 @@ $(".keywords").keyup(function (event) {
 
     // 按键盘下键
     if (event.keyCode == 40 && !isNull) {
-        if (indexNow == 100){
+        if (indexNow == 100 || indexNow == result_length) {
             indexNow = -1;
         }
         indexNow++;
@@ -44,9 +46,8 @@ $(".keywords").keyup(function (event) {
         }
         if (indexNow > result_length - 1) {
             indexNow = 100;
-            $(".keywords").val(initWords); 
+            $(".keywords").val(initWords);
         }
-     
         if (indexNow > -1 && indexNow < result_length) {
             $('.message li')[indexNow].className = 'active';
             changeKeywords($('.keywords'));
@@ -54,7 +55,7 @@ $(".keywords").keyup(function (event) {
     }
     //按键盘上键
     if (event.keyCode == 38 && !isNull) {
-        if (indexNow == 100) {
+        if (indexNow == 100 || indexNow == -1) {
             indexNow = result_length;
         }
         indexNow--;
@@ -74,12 +75,15 @@ $(".keywords").keyup(function (event) {
             changeKeywords($('.keywords'));
         }
     }
- 
-
-        //按下鼠标enter键
-        if (event.keyCode == 13 && !isNull) {
-            window.open("https://www.baidu.com/s?wd=" + keyWords);
-        }
+    //按下鼠标enter键
+    if (event.keyCode == 13 && !isNull) {
+        window.open("https://www.baidu.com/s?wd=" + keyWords);
+    }
+    //按下esc键
+    if (event.keyCode == 27 && !isNull) {
+       $('.message').css('display','none');
+    }
+    // console.log(event.keyCode);
 });
 
 // 搜索框失焦隐藏搜索列表
@@ -96,8 +100,6 @@ $(".keywords").keyup(function (event) {
 $(document).on('click', function () {
     $('.message').css('display', 'none');
 });
-
-
 
 // 加载搜索结果
 function getInfo(obj) {
@@ -144,4 +146,3 @@ function search_result() {
         window.open("https://www.baidu.com/s?wd=" + keyWords);
     }
 }
-

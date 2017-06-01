@@ -14,5 +14,5 @@
 ### button hover
 - [button hover](https://mrmengj.github.io/some-demo/buuton20%hover)
 
-<a href="https://mrmengj.github.io/some-demo/button hover/index.html"><img width="150" alt="button hover" title="button-hover" src="https://ooo.0o0.ooo/2017/06/01/592fae2066f8a.png" /></a>
+<a href="https://mrmengj.github.io/some-demo/button-hover/index.html"><img width="150" alt="button hover" title="button-hover" src="https://ooo.0o0.ooo/2017/06/01/592fae2066f8a.png" /></a>
 >>>>>>> origin/master

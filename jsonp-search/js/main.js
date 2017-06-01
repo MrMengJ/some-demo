@@ -1,5 +1,8 @@
+//indexNow == 100为中间值，表示列表中结果没有被选中
+
 var indexNow = -1;
 var result_length = 0;
+var initWords;//搜索框停止打字时的值
 // 搜索框鼠标事件
 $(".keywords").keyup(function (event) {
     //     $.ajax({
@@ -15,11 +18,12 @@ $(".keywords").keyup(function (event) {
     var isNull = (str === '' || str === undefined || str === null);
     var script = document.createElement('script');
     if (keyWords.length > 0 && !isNull) {
-        $('.message').css('display', 'block')
+        $('.message').css('display', 'block');
     } else {
-        $('.message').css('display', 'none')
+        $('.message').css('display', 'none');
     }
     if (event.keyCode !== 38 && event.keyCode !== 40 && !isNull) {
+        initWords = $(".keywords").val();//搜索框停止打字时的值
         indexNow = -1;
         script.src = "https://sug.so.360.cn/suggest?callback=getInfo&encodein=utf-8&encodeout=utf-8&format=json&fields=word&word=" + keyWords;
         document.body.appendChild(script);
@@ -27,6 +31,9 @@ $(".keywords").keyup(function (event) {
 
     // 按键盘下键
     if (event.keyCode == 40 && !isNull) {
+        if (indexNow == 100){
+            indexNow = -1;
+        }
         indexNow++;
         for (var i = 0; i < result_length; i++) {
             if (i == indexNow) {
@@ -36,13 +43,20 @@ $(".keywords").keyup(function (event) {
             }
         }
         if (indexNow > result_length - 1) {
-            indexNow = 0;
-            $('.message li')[indexNow].className = 'active';
+            indexNow = 100;
+            $(".keywords").val(initWords); 
         }
-        changeKeywords($('.keywords'));
+     
+        if (indexNow > -1 && indexNow < result_length) {
+            $('.message li')[indexNow].className = 'active';
+            changeKeywords($('.keywords'));
+        }
     }
     //按键盘上键
     if (event.keyCode == 38 && !isNull) {
+        if (indexNow == 100) {
+            indexNow = result_length;
+        }
         indexNow--;
         for (var i = result_length - 1; i > -1; i--) {
             if (i == indexNow) {
@@ -52,15 +66,20 @@ $(".keywords").keyup(function (event) {
             }
         }
         if (indexNow < 0) {
-            indexNow = result_length - 1;
-            $('.message li')[indexNow].className = 'active';
+            indexNow = 100;
+            $(".keywords").val(initWords);
         }
-        changeKeywords($('.keywords'));
+        if (indexNow > -1 && indexNow < result_length) {
+            $('.message li')[indexNow].className = 'active';
+            changeKeywords($('.keywords'));
+        }
     }
-    //按下鼠标enter键
-    if (event.keyCode == 13) {
-        window.open("https://www.baidu.com/s?wd=" + keyWords);
-    }
+ 
+
+        //按下鼠标enter键
+        if (event.keyCode == 13 && !isNull) {
+            window.open("https://www.baidu.com/s?wd=" + keyWords);
+        }
 });
 
 // 搜索框失焦隐藏搜索列表
@@ -68,13 +87,13 @@ $(".keywords").keyup(function (event) {
 //     console.log(indexNow)
 //     if (indexNow < 0 || indexNow > result_length-1) {
 //         $('.message').css('display', 'none');
-        
+
 //     }
 // });
 
 //搜索框失焦不好使
 // 点击document隐藏搜素列表
-$(document).on('click',function(){
+$(document).on('click', function () {
     $('.message').css('display', 'none');
 });
 

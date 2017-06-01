@@ -63,11 +63,21 @@ $(".keywords").keyup(function (event) {
 });
 
 // 搜索框失焦隐藏搜索列表
-$(".keywords").blur(function () {
-    if (indexNow < 0 || indexNow > result_length) {
-        $('.message').css('display', 'none');
-    }
+// $(".keywords").blur(function () {
+//     console.log(indexNow)
+//     if (indexNow < 0 || indexNow > result_length-1) {
+//         $('.message').css('display', 'none');
+        
+//     }
+// });
+
+//搜索框失焦不好使
+// 点击document隐藏搜素列表
+$(document).on('click',function(){
+    $('.message').css('display', 'none');
 });
+
+
 
 // 加载搜索结果
 function getInfo(obj) {

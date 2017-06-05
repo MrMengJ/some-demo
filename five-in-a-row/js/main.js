@@ -48,8 +48,8 @@ for (i = 0; i <= 196 ; i++) {
 
 var blackChess = new Image();
 var whiteChess = new Image();
-blackChess.src = "./img/black.webp";//是"./img/black.png"而不是"../img/black.png"
-whiteChess.src = "./img/white.webp";
+blackChess.src = "img/black.png";//是"img/black.png"而不是"../img/black.png"
+whiteChess.src = "img/white.png";
 var scrollX = document.documentElement.scrollLeft || document.body.scrollLeft;
 var scrollY = document.documentElement.scrollTop || document.body.scrollTop;
 var offsetX = $(".container").offset().left;

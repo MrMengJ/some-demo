@@ -33,13 +33,13 @@
 .container {
     width: 800px;
     margin: 0 auto;
-    background: url("../img/container_bak.jpg") no-repeat;
+    background: url("../img/container_bak.webp") no-repeat;
     background-size: cover;
 }
 
 /*棋盘画布样式*/
 canvas.chessboard{
-    background: url("../img/chessboard_bak2.jpg") no-repeat;
+    background: url("../img/chessboard_bak2.webp") no-repeat;
     -webkit-background-size:cover;
     background-size:cover;
     cursor: pointer;

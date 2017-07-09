@@ -2,9 +2,9 @@
 
 var indexNow = -1;
 var result_length = 0;
-var initWords;//搜索框停止打字时的值
+var initWords; //搜索框停止打字时的值
 // 搜索框鼠标事件
-$(".keywords").keyup(function (event) {
+$(".keywords").keyup(function(event) {
     //     $.ajax({
     //         type:"POST",
     //         url:"https://sug.so.360.cn/suggest",
@@ -25,7 +25,7 @@ $(".keywords").keyup(function (event) {
     // 当按键为home,end,page up和page down时，不执行跨域请求
     var hah = (event.keyCode == 33 || event.keyCode == 34 || event.keyCode == 35 || event.keyCode == 36);
     if (event.keyCode !== 38 && event.keyCode !== 40 && !isNull && !hah) {
-        initWords = $(".keywords").val();//搜索框停止打字时的值
+        initWords = $(".keywords").val(); //搜索框停止打字时的值
         indexNow = -1;
         script.src = "https://sug.so.360.cn/suggest?callback=getInfo&encodein=utf-8&encodeout=utf-8&format=json&fields=word&word=" + keyWords;
         document.body.appendChild(script);
@@ -81,7 +81,7 @@ $(".keywords").keyup(function (event) {
     }
     //按下esc键
     if (event.keyCode == 27 && !isNull) {
-       $('.message').css('display','none');
+        $('.message').css('display', 'none');
     }
     // console.log(event.keyCode);
 });
@@ -97,7 +97,7 @@ $(".keywords").keyup(function (event) {
 
 //搜索框失焦不好使
 // 点击document隐藏搜素列表
-$(document).on('click', function () {
+$(document).on('click', function() {
     $('.message').css('display', 'none');
 });
 
@@ -112,19 +112,18 @@ function getInfo(obj) {
         document.querySelector('.message ul').appendChild(li);
         li.innerHTML = result[i].word;
     }
-
 }
 //鼠标移动移出
 //事件绑定
-$('.message').on('mouseover', "li", function () {
+$('.message').on('mouseover', "li", function() {
     $(this).addClass('active');
     indexNow = $('.message li[class="active"]').index();
     changeKeywords($('.keywords'));
 })
-$('.message').on('mouseout', "li", function () {
-    $(this).removeClass('active');
-})
-// 改变搜索框的值
+$('.message').on('mouseout', "li", function() {
+        $(this).removeClass('active');
+    })
+    // 改变搜索框的值
 function changeKeywords(selector) {
     selector.val($('.message li')[indexNow].innerText);
 }
